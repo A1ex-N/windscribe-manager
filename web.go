@@ -53,8 +53,7 @@ func GetCSRFTokens() CsrfTokens {
 }
 
 func UpdateDataUsageAndResetDate(user *WindscribeAccount) error {
-	tokens := GetCSRFTokens()
-	loginResponse := loginAndGetResponse(user.Username, user.Password, &tokens)
+	loginResponse := loginAndGetResponse(user.Username, user.Password)
 	if loginResponse.StatusCode != http.StatusOK {
 		return errors.New(fmt.Sprintf("status code not 202: status code is %v", loginResponse.StatusCode))
 	}
@@ -75,8 +74,7 @@ func UpdateDataUsageAndResetDate(user *WindscribeAccount) error {
 
 // GetAllData This function shouldn't be used for existing accounts. Only new ones that haven't been scraped yet
 func GetAllData(username, password string) WindscribeAccount {
-	tokens := GetCSRFTokens()
-	loginResponse := loginAndGetResponse(username, password, &tokens)
+	loginResponse := loginAndGetResponse(username, password)
 	if loginResponse.StatusCode != http.StatusOK {
 		log.Fatalf("Status not OK: %v", loginResponse.Status)
 	}
@@ -101,7 +99,8 @@ func GetAllData(username, password string) WindscribeAccount {
 	return data
 }
 
-func loginAndGetResponse(username, password string, tokens *CsrfTokens) *http.Response {
+func loginAndGetResponse(username, password string) *http.Response {
+	tokens := GetCSRFTokens()
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		log.Fatal(err)
@@ -111,7 +110,7 @@ func loginAndGetResponse(username, password string, tokens *CsrfTokens) *http.Re
 		Jar: jar,
 	}
 
-	loginBody := NewLoginBody(username, password, tokens)
+	loginBody := NewLoginBody(username, password, &tokens)
 
 	resp, err := client.PostForm(LoginURL, loginBody)
 	if err != nil {
