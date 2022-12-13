@@ -33,8 +33,11 @@ const WindscribeAccountsEnvironmentVariableName = "WindscribeAccountsPath"
 func SetWindscribeAccountPath() {
 	var path string
 	fmt.Print("Enter the path to your windscribe accounts file: ")
-	fmt.Scanln(&path)
-	err := os.Setenv(WindscribeAccountsEnvironmentVariableName, path)
+	_, err := fmt.Scanln(&path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = os.Setenv(WindscribeAccountsEnvironmentVariableName, path)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -60,11 +63,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	print := flag.Bool("print", false, "Print account info and exit")
+	printAccounts := flag.Bool("print", false, "Print account info and exit")
 	accountNumber := flag.Int("login", -1, "Login to a specific account, update the data usage and reset date, then print it.")
 	flag.Parse()
 
-	if *print {
+	if *printAccounts {
 		DisplayAccounts(&windscribeAccounts)
 		os.Exit(0)
 	}
@@ -74,5 +77,5 @@ func main() {
 		os.Exit(0)
 	}
 
-	fmt.Println("No arguments provided. run go windscribe-manager.exe -help")
+	ChooseAccountAndUpdate(&windscribeAccounts, accountsFile)
 }
