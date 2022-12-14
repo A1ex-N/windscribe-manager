@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -33,13 +32,11 @@ func GetCurrentTime() string {
 // ConvertToAUSDate couldn't get the time.Parse() function to parse December 14th 2022 to 14 December 2022,
 // so I had to do it a shitty way like this.
 func ConvertToAUSDate(original string) (string, error) {
-	toRemove := [3]string{"st", "nd", "th"}
+	toRemove := [4]string{"st", "nd", "th", "rd"}
 	for _, i := range toRemove {
 		original = strings.Replace(original, i, "", 1)
 	}
-	originalSplit := strings.Split(original, " ")
-	newString := fmt.Sprintf("%v %v %v", originalSplit[1], originalSplit[0], originalSplit[2])
-	t, err := time.Parse("02 January 2006", newString)
+	t, err := time.Parse("January 2 2006", original)
 	if err != nil {
 		return "", err
 	}
