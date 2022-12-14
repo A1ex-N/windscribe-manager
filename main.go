@@ -51,6 +51,7 @@ func SetWindscribeAccountPath() {
 }
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	accountsFile, exists := os.LookupEnv(WindscribeAccountsEnvironmentVariableName)
 
 	if !exists {
