@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -58,6 +60,14 @@ func DumpWindscribeAccounts(accounts *[]WindscribeAccount, filename string) erro
 }
 
 func GetWindscribeAccounts(filename string) ([]WindscribeAccount, error) {
+	if _, err := os.Stat(filename); os.IsNotExist(err) {
+		fmt.Printf("'%v' doesn't exist. creating it\n", filename)
+		_, err := os.Create(filename)
+		if err != nil {
+			return nil, errors.New(fmt.Sprintf("failed creating %v\n%v", filename, err))
+		}
+		return []WindscribeAccount{}, nil
+	}
 	rawData, fileReadErr := os.ReadFile(filename)
 
 	if fileReadErr != nil {
