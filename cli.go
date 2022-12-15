@@ -58,6 +58,10 @@ func DisplaySpecificAccount(choice int, accounts *[]WindscribeAccount) {
 	writer.Flush()
 }
 
+func PrintUsernameAndPassword(choice int, accounts *[]WindscribeAccount) {
+	fmt.Printf("Username: %v, Password: %v", (*accounts)[choice].Username, (*accounts)[choice].Password)
+}
+
 func DisplayAccounts(accounts *[]WindscribeAccount) {
 	// https://blog.el-chavez.me/2019/05/05/golang-tabwriter-aligned-text/
 	writer := tabwriter.NewWriter(os.Stdout, 0, 8, 1, '\t', tabwriter.AlignRight)
