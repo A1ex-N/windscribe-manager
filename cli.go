@@ -48,6 +48,31 @@ func LoginAndUpdateSpecifc(choice int, accounts *[]WindscribeAccount, filename s
 	DisplaySpecificAccount(choice, accounts)
 }
 
+func GetUsernameAndPassword() (string, string) {
+	var username, password string
+	fmt.Print("Enter a username: ")
+	fmt.Scanln(&username)
+	fmt.Print("\nEnter a password: ")
+	fmt.Scanln(&password)
+	return username, password
+}
+
+func AddNewAccount(username, password, filename string, existingAccounts []WindscribeAccount) {
+	for _, account := range existingAccounts {
+		if username == account.Username {
+			fmt.Printf("'%v' is already in the saved accounts file.\n", username)
+			fmt.Println("If you want to update the data for that account, run '-login' with the account number")
+			return
+		}
+	}
+	newAccount := GetAllData(username, password)
+	existingAccounts = append(existingAccounts, newAccount)
+	err := DumpWindscribeAccounts(&existingAccounts, filename)
+	if err != nil {
+		log.Fatalf("error dumping accounts to %v. error: %v", filename, err)
+	}
+}
+
 func DisplaySpecificAccount(choice int, accounts *[]WindscribeAccount) {
 	writer := tabwriter.NewWriter(os.Stdout, 0, 8, 1, '\t', tabwriter.AlignRight)
 

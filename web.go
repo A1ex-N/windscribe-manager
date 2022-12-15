@@ -84,6 +84,7 @@ func GetAllData(username, password string) WindscribeAccount {
 	if err != nil {
 		log.Fatal(err)
 	}
+	data.DataUsage = strings.Replace(data.DataUsage, "\n", "", 1)
 	data.Username = username
 	data.Password = password
 	data.Email = "unknown"
@@ -92,7 +93,7 @@ func GetAllData(username, password string) WindscribeAccount {
 	if err != nil {
 		log.Fatal(err)
 	}
-	data.DateCreated, err = ConvertToAUSDate(data.ResetDate)
+	data.DateCreated, err = ConvertToAUSDate(data.DateCreated)
 	if err != nil {
 		log.Fatal(err)
 	}
