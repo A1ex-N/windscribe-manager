@@ -64,8 +64,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	printAccounts := flag.Bool("print", false, "Print account info and exit")
-	accountNumber := flag.Int("login", -1, "Login to a specific account, update the data usage and reset date, then print it.")
+	printAccounts := flag.Bool("print", false, "Print all account info and exit")
+	accountNumberToLoginTo := flag.Int("login", -1, "Login to a specific account and update the accounts file")
+	accountNumberToPrint := flag.Int("creds", -1, "Print the username and password for a specific account")
 	flag.Parse()
 
 	if *printAccounts {
@@ -73,8 +74,13 @@ func main() {
 		os.Exit(0)
 	}
 
-	if *accountNumber > -1 {
-		LoginAndUpdateSpecifc(*accountNumber, &windscribeAccounts, accountsFile)
+	if *accountNumberToLoginTo > -1 {
+		LoginAndUpdateSpecifc(*accountNumberToLoginTo, &windscribeAccounts, accountsFile)
+		os.Exit(0)
+	}
+
+	if *accountNumberToPrint > -1 {
+		PrintUsernameAndPassword(*accountNumberToPrint, &windscribeAccounts)
 		os.Exit(0)
 	}
 
