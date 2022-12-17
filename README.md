@@ -1,6 +1,8 @@
-﻿# windscribe-manager
+# windscribe-manager
 
 A command-line program for managing multiple [windscribe VPN](https://windscribe.com) accounts.
+
+This program logs into a windscribe account, scrapes the data usage and reset date, and then saves it back to a file.
 
 ## Installation
 
