@@ -65,6 +65,7 @@ func main() {
 	}
 
 	printAccounts := flag.Bool("print", false, "Print all account info and exit")
+	printFilePath := flag.Bool("path", false, "Print the location of the account file")
 	addAccount := flag.Bool("add", false, "Add a new account")
 	accountNumberToLoginTo := flag.Int("login", -1, "Login to a specific account and update the accounts file")
 	accountNumberToPrint := flag.Int("creds", -1, "Print the username and password for a specific account")
@@ -88,6 +89,11 @@ func main() {
 	if *addAccount {
 		username, password := GetUsernameAndPassword()
 		AddNewAccount(username, password, accountsFile, windscribeAccounts)
+		os.Exit(0)
+	}
+
+	if *printFilePath {
+		fmt.Println(accountsFile)
 		os.Exit(0)
 	}
 
