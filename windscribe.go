@@ -27,12 +27,9 @@ func (w *WindscribeAccount) UpdateAccount(resetDate string, dataUsage string) {
 }
 
 func GetCurrentTime() string {
-	//02 Jan 06 15:04 MST
 	return string(time.Now().Format("02 January 2006 15:04"))
 }
 
-// ConvertToAUSDate couldn't get the time.Parse() function to parse December 14th 2022 to 14 December 2022,
-// so I had to do it a shitty way like this.
 func ConvertToAUSDate(original string) (string, error) {
 	toRemove := [4]string{"st", "nd", "th", "rd"}
 	for _, i := range toRemove {
