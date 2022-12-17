@@ -40,4 +40,4 @@ Running it without any arguments will prompt you to enter an account index to lo
 ## Additional Notes
 
 * This program currently only supports Windows. Support for other operating systems may be added in the future.
-* All dates will be stored as `date month year`, and `reset date` will have 1 day added to it
+* All dates will be stored as `date month year`, and `reset date` will have 1 day added to it. Ideally it should be using your local date/time format. PRs are welcome :)
