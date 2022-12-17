@@ -55,7 +55,7 @@ func GetCSRFTokens() CsrfTokens {
 func UpdateDataUsageAndResetDate(user *WindscribeAccount) error {
 	loginResponse := loginAndGetResponse(user.Username, user.Password)
 	if loginResponse.StatusCode != http.StatusOK {
-		return errors.New(fmt.Sprintf("status code not 202: status code is %v", loginResponse.StatusCode))
+		return errors.New(fmt.Sprintf("status code not 200: status code is %v", loginResponse.StatusCode))
 	}
 	defer loginResponse.Body.Close()
 	var data WindscribeAccount
