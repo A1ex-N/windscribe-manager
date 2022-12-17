@@ -1,23 +1,3 @@
-/*
-	There's currently no way to add new accounts.
-
-	You have to have an existing json file containing json of the following structure:
-	[
-		{
-			"username": "",
-			"password": "",
-		    "email": "",
-		    "date_created": "",
-		    "reset_date": "",
-		    "data_usage": "",
-		    "last_checked": "",
-		    "referer_url": ""
-		}
-	]
-
-	There's also no way to tell if you're being rate limited
-*/
-
 package main
 
 import (
